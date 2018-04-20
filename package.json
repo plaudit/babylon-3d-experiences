@@ -17,6 +17,7 @@
   },
   "homepage": "https://github.com/plaudit/babylon-3d-experiences#readme",
   "dependencies": {
+    "browser-sync": "^2.23.7",
     "browserify": "^16.2.0",
     "gulp": "^3.9.1",
     "gulp-rename": "^1.2.2",

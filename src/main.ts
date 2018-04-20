@@ -6,11 +6,11 @@ function hello(compiler: string) {
 class Test {
     private name: string;
     constructor() {
-        console.log('xxx');
         this.name = 'asdf';
     }
 }
 
 hello("TypeScript!");
+console.log('asfd');
 
 var test = new Test();

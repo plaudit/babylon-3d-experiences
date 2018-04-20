@@ -8,6 +8,7 @@ var gutil = require("gulp-util");
 var uglify = require('gulp-uglify');
 var sourcemaps = require('gulp-sourcemaps');
 var buffer = require('vinyl-buffer');
+var browsersync = require('browser-sync');
 
 var config = {
     filesCopy: ['src/*.html', 'src/*.css'],
@@ -15,7 +16,7 @@ var config = {
 };
 
 var bundler = null;
-function js() {
+function scripts() {
     console.log('\n--- Starting bundle ---');
     if (bundler === null) {
         bundler = browserify({
@@ -27,7 +28,7 @@ function js() {
         })
         .plugin(tsify)
         .plugin(watchify)
-        .on('update', js);
+        .on('update', scripts);
     }
 
     return bundler
@@ -60,5 +61,20 @@ function copyFiles() {
 		.pipe(gulp.dest('dist'));
 }
 
+var bs = null;
+function browsersyncTask() {
+    if (bs === null) {
+        bs = browsersync.create();
+        bs.init({
+            server: {
+                baseDir: './dist',
+            },
+            files: ['./dist/**']
+        });
+    }
+}
+
 gulp.task('copyFiles', copyFiles);
-gulp.task('default', ['copyFiles'], js);
+gulp.task('scripts', scripts);
+gulp.task('browsersync', browsersyncTask);
+gulp.task('default', ['copyFiles', 'scripts', 'browsersync']);
