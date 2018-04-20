@@ -9,46 +9,94 @@ var uglify = require('gulp-uglify');
 var sourcemaps = require('gulp-sourcemaps');
 var buffer = require('vinyl-buffer');
 var browsersync = require('browser-sync');
+var path = require("path");
 
 var config = {
+    distPath: 'dist',
     filesCopy: ['src/*.html', 'src/*.css'],
-    tsEntries: ['src/main.ts']
+    scripts: [
+        // common.js - Will contain BabylonJS. We separate it out so babylon doesn't reprocess it everytime we change the rest of our code.
+        {  
+            dest: 'commons.js',
+            typeScript: false,
+            uglify: false,
+            require: ['babylonjs'],
+            external: [
+                // Ignore these dependencies. We do not need a physics engine
+                'cannon', 'oimo',
+                'earcut'
+            ]
+        },
+        // main.js - Contains our code.
+        {
+            dest: 'main.js',
+            typeScript: true,
+            uglify: true,
+            src: ['src/main.ts'],
+            external: ['babylonjs']
+        }
+    ]
 };
 
-var bundler = null;
+var bundlerMap = [];
 function scripts() {
-    console.log('\n--- Starting bundle ---');
-    if (bundler === null) {
+    for (var i=0; i < config.scripts.length; i++) {
+        buildScript(config.scripts[i]);
+    }
+}
+function buildScript(scriptConfig) {
+    var destFile = scriptConfig.dest;
+
+    console.log('\n--- Starting bundle: ' + destFile + '---');
+    console.log('Config: ', scriptConfig);
+
+    var bundler = destFile in bundlerMap ? bundlerMap[destFile] : undefined;
+    if (bundler === undefined) {
+        // Create bundler for this dest file
         bundler = browserify({
             basedir: '.',
             debug: true,
-            entries: config.tsEntries,
+            entries: scriptConfig.src,
             cache: {},
             packageCache: {}
-        })
-        .plugin(tsify)
-        .plugin(watchify)
-        .on('update', scripts);
+        });
+        if (scriptConfig.typeScript) {
+            //console.log('   Enabling TypeScript');
+            bundler.plugin(tsify);
+        }
+        bundler.plugin(watchify)
+        bundler.on('update', scripts);
+
+        if (scriptConfig.hasOwnProperty('require')) {
+            //console.log('   Require: ', scriptConfig.require);
+            bundler.require(scriptConfig.require);
+        }
+        if (scriptConfig.hasOwnProperty('external')) {
+            //console.log('   External: ', scriptConfig.external);
+            bundler.external(scriptConfig.external);
+        }
+
+        bundlerMap[destFile] = bundler;
     }
 
-    return bundler
-        .bundle()
-
+    var b = bundler.bundle()
         .on('log', gutil.log)
         .on('error', gutil.log)
-
-        .pipe(source('bundle.js'))
-
+        .pipe(source(destFile))
 		.pipe(buffer())
-        .pipe(sourcemaps.init({loadMaps: true}))
-    
-        .pipe(rename('bundle.max.js'))
-		.pipe(gulp.dest('dist'))
-        .pipe(rename('bundle.js'))
-        .pipe(uglify())
+        .pipe(sourcemaps.init({loadMaps: true}));
 
-		.pipe(sourcemaps.write('./'))
-        .pipe(gulp.dest('dist'));
+    if (scriptConfig.uglify) {
+        b = b.pipe(rename({extname: '.max' + path.extname(destFile)}))
+            .pipe(gulp.dest(config.distPath))
+            .pipe(rename(destFile))
+            .pipe(uglify());
+    };
+
+    b = b.pipe(sourcemaps.write('./'))
+        .pipe(gulp.dest(config.distPath));
+
+    return b;
 };
 
 var copyFilesWatching = false;
@@ -58,7 +106,7 @@ function copyFiles() {
         gulp.watch(config.filesCopy, {}, copyFiles);
     }
 	return gulp.src(config.filesCopy)
-		.pipe(gulp.dest('dist'));
+		.pipe(gulp.dest(config.distPath));
 }
 
 var bs = null;
