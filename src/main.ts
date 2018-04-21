@@ -1,12 +1,13 @@
 import CookieCutterSuburbia from './CookieCutterSuburbia';
 import SmartRender from './SmartRender';
 import HouseBuilder from './HouseBuilder';
-import ILoadingScreen = BABYLON.ILoadingScreen;
 
 const canvas: HTMLCanvasElement = document.getElementById('renderCanvas') as HTMLCanvasElement;
 const suburbia = new CookieCutterSuburbia(canvas);
-const engine = suburbia.scene.getEngine();
 
+/* ===================================================================================================
+ * Smart Renderer
+ */
 const smartRender = new SmartRender(suburbia.scene);
 const smartRenderToggle = document.getElementById("smartRenderToggle");
 function updateSmartRenderToggleStyleClass() {
@@ -18,6 +19,9 @@ smartRenderToggle.addEventListener("click", (event: Event) => {
 });
 updateSmartRenderToggleStyleClass();
 
+/* ===================================================================================================
+ * Houses
+ */
 const houseBuilder = new HouseBuilder(suburbia.scene, () => {
 	// Rerender when house loaded
 	event.preventDefault();
@@ -35,16 +39,19 @@ document.getElementById("cloneHouse").addEventListener("click", (event: Event) =
 	}
 	addAnother();
 });
-document.getElementById("newInstanceHouse").addEventListener("click", (event: Event) => {
+document.getElementById("createInstanceHouse").addEventListener("click", (event: Event) => {
 	event.preventDefault();
 
 	let numberToAdd = parseInt(housesNumberToAdd.value);
 	function addAnother() {
 		if (numberToAdd-- >= 0)
-			houseBuilder.addHouseNewInstance(addAnother);
+			houseBuilder.addHouseCreateInstance(addAnother);
 	}
 	addAnother();
 });
 
+/* ===================================================================================================
+ * Debugger
+ */
 // TODO: look into https://www.babylonjs.com/js/loader.js
 suburbia.scene.debugLayer.show();
