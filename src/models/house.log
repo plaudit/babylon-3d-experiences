@@ -16,14 +16,14 @@ Exporter version: 5.4.0, Blender version: 2.78 (sub 0)
 		processing begun of Standard material:  Dark Gray
 		processing begun of Standard material:  Medium Gray
 		processing begun of multimaterial:  house.Multimaterial#0
-		num positions      :  5433
-		num normals        :  5433
+		num positions      :  5385
+		num normals        :  5385
 		num uvs            :  0
 		num uvs2           :  0
 		num colors         :  0
-		num indices        :  5433
+		num indices        :  5385
 		WARNING: # of 0 area faces found:  4
 ========= Writing of scene file started =========
 ========= Writing of scene file completed =========
 ========= end of processing =========
-elapsed time:  0 min, 0.1193 secs
+elapsed time:  0 min, 0.1268 secs
