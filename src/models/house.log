@@ -2,12 +2,12 @@ Exporter version: 5.4.0, Blender version: 2.78 (sub 0)
 ========= Conversion from Blender to Babylon.js =========
 	Scene settings used:
 		selected layers only:  false
-		flat shading entire scene:  false
+		flat shading entire scene:  true
 		inline textures:  false
-		texture directory:  G:\My Drive\Marketing\Presentations (Marketing)\2018-04 MinneWebCon - 3D Experiences in Your Browser\
+		texture directory:  C:\workspaces\Plaudit\minnewebcon-babylon-3d-experiences\src\models\
 	Python World class constructor completed
 	WARNING: No active camera has been assigned, or is not in a currently selected Blender layer
-	processing begun of mesh:  house.008
+	processing begun of mesh:  house
 		processing begun of Standard material:  Window
 		processing begun of Standard material:  SFH House
 		processing begun of Standard material:  Dark Brown
@@ -16,8 +16,8 @@ Exporter version: 5.4.0, Blender version: 2.78 (sub 0)
 		processing begun of Standard material:  Dark Gray
 		processing begun of Standard material:  Medium Gray
 		processing begun of multimaterial:  house.Multimaterial#0
-		num positions      :  1226
-		num normals        :  1226
+		num positions      :  5433
+		num normals        :  5433
 		num uvs            :  0
 		num uvs2           :  0
 		num colors         :  0
@@ -26,4 +26,4 @@ Exporter version: 5.4.0, Blender version: 2.78 (sub 0)
 ========= Writing of scene file started =========
 ========= Writing of scene file completed =========
 ========= end of processing =========
-elapsed time:  0 min, 0.1699 secs
+elapsed time:  0 min, 0.1193 secs
