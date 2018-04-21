@@ -21,9 +21,9 @@ export default class CookieCutterSuburbia {
 		const light1 = new BABYLON.HemisphericLight("hemisphericLight", new BABYLON.Vector3(0, 1, 0), this.scene);
 		const light2 = new BABYLON.PointLight("pointLight", new BABYLON.Vector3(0, 1, -1), this.scene);
 
-		let sphere = BABYLON.MeshBuilder.CreateSphere("sphere", {segments: 16, diameter: 2}, this.scene);
+		let sphere = BABYLON.MeshBuilder.CreateSphere("sphere", {segments: 16, diameter: 1}, this.scene);
 		// Move the sphere upward 1/2 of its height.
-		sphere.position.y = 1;
+		sphere.position.y = 2;
 		const red = new BABYLON.StandardMaterial("red", this.scene);
 		red.diffuseColor = new BABYLON.Color3(1, 0, 0);
 		//red.specularColor = new BABYLON.Color3(0.5, 0.6, 0.87);

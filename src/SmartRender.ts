@@ -1,8 +1,8 @@
 import * as BABYLON from 'babylonjs';
 
 export default class SmartRenderer {
-	public alwaysRender: boolean = true;
-	public forceRenderOnce: boolean = false;
+	public alwaysRender: boolean = false;
+	public forceRenderOnce: boolean = true;
 
 	private scene: BABYLON.Scene;
 	private lastPosition: BABYLON.Vector3 = null;
@@ -27,7 +27,6 @@ export default class SmartRenderer {
 
 			this.forceRenderOnce = false;
 
-			console.log('Rendering');
 			this.scene.render();
 		}
 	}
@@ -44,9 +43,9 @@ export default class SmartRenderer {
 			return true;
 		}
 
-		if (this.scene.debugLayer.isVisible()) {
-			return true;
-		}
+		//if (this.scene.debugLayer.isVisible()) {
+		//	return true;
+		//}
 
 		return false;
 	}

@@ -20,3 +20,6 @@ canvas {
 .toggleOff {
 	background: #AAA;
 }
+#housesNumberToAdd {
+	width: 3em;
+}
