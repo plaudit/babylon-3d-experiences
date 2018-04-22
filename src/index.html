@@ -7,15 +7,19 @@
 		<link type="text/css" href="main.css" rel="stylesheet"/>
 	</head>
 	<body>
-		<canvas id="renderCanvas" touch-action="none"></canvas>
+		<canvas id="renderCanvas"></canvas>
 
 		<div id="controls">
 			<button id="smartRenderToggle">Smart Render</button>
 
-			<input id="housesNumberToAdd" type="number" value="500"/>
+			<input id="housesNumberToAdd" type="number" value="300"/>
+			<!-- <button id="fromScratchHouse">From Scratch</button> -->
 			<button id="cloneHouse">Clone</button>
-			<button id="createInstanceHouse">New Instance</button>
+			<button id="createInstanceHouse">Create Instance</button>
 			<button id="clearHouses">Clear</button>
+
+			<button id="mergeHouses">Merge Houses</button>
+			<button id="debugLayerToggle">Debug</button>
 		</div>
 
 		<script type="text/javascript" src="commons.js"></script>

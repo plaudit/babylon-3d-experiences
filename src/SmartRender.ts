@@ -43,9 +43,9 @@ export default class SmartRenderer {
 			return true;
 		}
 
-		//if (this.scene.debugLayer.isVisible()) {
-		//	return true;
-		//}
+		if (this.scene.debugLayer.isVisible()) {
+			return true;
+		}
 
 		return false;
 	}

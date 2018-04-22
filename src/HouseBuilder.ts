@@ -1,6 +1,6 @@
 import * as BABYLON from 'babylonjs';
 
-interface newHouseCallBack {
+interface newHouseCallback {
 	(house: BABYLON.AbstractMesh): void;
 }
 
@@ -10,13 +10,13 @@ export default class HouseBuilder {
 
 	private readonly incrementX = 1;
 	private readonly incrementZ = -1;
-	private readonly xStart = -10;
-	private readonly xEnd = 10;
+	private readonly xStart = 0;
+	private readonly xEnd = 20;
 	private nextX: number;
 	private nextZ: number;
 
 	private originalHouse: BABYLON.Mesh = null;
-	private houses: BABYLON.AbstractMesh[] = null;
+	private houses: BABYLON.AbstractMesh[] = [];
 
 	constructor(scene: BABYLON.Scene, callback?: () => void) {
 		this.scene = scene;
@@ -24,29 +24,40 @@ export default class HouseBuilder {
 		this.clearHouses();
 	}
 
-	public addHouseFromModel(callback?: newHouseCallBack): void {
-		BABYLON.SceneLoader.Append("./", "house.babylon", this.scene, () => {
-			console.log('House loaded');
+	public getOriginalHouse(callback?: newHouseCallback): void {
+		if (this.originalHouse == null) {
+			this.addHouseFromModel(callback);
+		} else {
+			this.executeCallbacks(callback, this.originalHouse);
+		}
+	}
 
+	public addHouseFromModel(callback?: newHouseCallback): void {
+		if (this.originalHouse !== null) {
+			// Loaded a house previous, rename it so new one doesn't conflict
+			this.originalHouse.id = "houseOriginal_" + this.houses.length;
+		}
+		BABYLON.SceneLoader.Append("./", "house.babylon", this.scene, () => {
 			this.originalHouse = <BABYLON.Mesh>this.scene.getNodeByID("house");
 			this.addAndPosition(this.originalHouse);
-
-			this.executeCallbacks();
+			this.executeCallbacks(callback, this.originalHouse);
 		});
 	}
 
-	public addHouseClone(callback?: newHouseCallBack): void {
-		const house = <BABYLON.Mesh>this.originalHouse.clone("house_" + this.houses.length);
-		this.addAndPosition(house);
-
-		this.executeCallbacks(callback, house);
+	public addHouseClone(callback?: newHouseCallback): void {
+		this.getOriginalHouse((originalHouse) => {
+			const house = <BABYLON.Mesh>(originalHouse as BABYLON.Mesh).clone("house_" + this.houses.length);
+			this.addAndPosition(house);
+			this.executeCallbacks(callback, house);
+		});
 	}
 
-	public addHouseCreateInstance(callback?: newHouseCallBack): void {
-		const house = <BABYLON.InstancedMesh>this.originalHouse.createInstance("house_" + this.houses.length);
-		this.addAndPosition(house);
-
-		this.executeCallbacks(callback, house);
+	public addHouseCreateInstance(callback?: newHouseCallback): void {
+		this.getOriginalHouse((originalHouse) => {
+			const house = <BABYLON.InstancedMesh>(originalHouse as BABYLON.Mesh).createInstance("house_" + this.houses.length);
+			this.addAndPosition(house);
+			this.executeCallbacks(callback, house);
+		});
 	}
 
 	private addAndPosition(house: BABYLON.AbstractMesh) {
@@ -63,7 +74,7 @@ export default class HouseBuilder {
 		}
 	}
 
-	public executeCallbacks(callback?: newHouseCallBack, house?: BABYLON.AbstractMesh): void {
+	public executeCallbacks(callback?: newHouseCallback, house?: BABYLON.AbstractMesh): void {
 		window.setTimeout(() => {
 			if (callback !== undefined) {
 				callback(house);
@@ -75,21 +86,31 @@ export default class HouseBuilder {
 	}
 
 	public clearHouses() {
-		if (this.houses !== null) {
+		if (this.houses.length > 0) {
 			this.houses.forEach(value => {
 				if (value !== this.originalHouse) {
 					value.dispose();
 				}
 			});
-		}
-		this.houses = [];
-		if (this.originalHouse !== null) {
-			this.houses.push(this.originalHouse);
+
+			this.houses = [];
+			if (this.originalHouse !== null) {
+				this.houses.push(this.originalHouse);
+			}
 		}
 
 		this.nextX = this.xStart;
-		this.nextZ = 10;
+		this.nextZ = 0;
 
 		this.executeCallbacks();
 	}
+
+	public mergeHouses() {
+		let mergedHouses = BABYLON.Mesh.MergeMeshes(<BABYLON.Mesh[]>this.houses, true, true)
+
+		const red = new BABYLON.StandardMaterial("red", this.scene);
+		red.diffuseColor = new BABYLON.Color3(1, 0, 0);
+		mergedHouses.material = red;
+	}
+
 }
