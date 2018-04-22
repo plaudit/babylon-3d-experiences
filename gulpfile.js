@@ -13,7 +13,7 @@ var path = require("path");
 
 var config = {
     distPath: 'dist',
-    filesCopy: ['src/*.html', 'src/*.css', 'src/models/*.babylon'],
+    filesCopy: ['src/*.html', 'src/*.css', 'src/*.jpg', 'src/models/*.babylon'],
     scripts: [
         // common.js - Will contain BabylonJS. We separate it out so babylon doesn't reprocess it everytime we change the rest of our code.
         {  
