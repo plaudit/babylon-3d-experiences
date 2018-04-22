@@ -36,8 +36,6 @@ export default class HouseBuilder {
 	}
 
 	public addHouseClone(callback?: newHouseCallBack): void {
-		console.log('Clone');
-
 		const house = <BABYLON.Mesh>this.originalHouse.clone("house_" + this.houses.length);
 		this.addAndPosition(house);
 
@@ -45,8 +43,6 @@ export default class HouseBuilder {
 	}
 
 	public addHouseCreateInstance(callback?: newHouseCallBack): void {
-		console.log('New instance');
-
 		const house = <BABYLON.InstancedMesh>this.originalHouse.createInstance("house_" + this.houses.length);
 		this.addAndPosition(house);
 
