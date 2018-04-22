@@ -5,6 +5,12 @@ import HouseBuilder from './HouseBuilder';
 const canvas: HTMLCanvasElement = document.getElementById('renderCanvas') as HTMLCanvasElement;
 const suburbia = new CookieCutterSuburbia(canvas);
 
+/*
+ * TODO:
+ * - Animate in
+ * - Change example to a tree lot - Grow trees in
+ */
+
 /* ===================================================================================================
  * Smart Renderer
  */
@@ -24,7 +30,6 @@ updateSmartRenderToggleStyleClass();
  */
 const houseBuilder = new HouseBuilder(suburbia.scene, () => {
 	// Rerender when house loaded
-	event.preventDefault();
 	smartRender.forceRenderOnce = true;
 });
 houseBuilder.addHouseFromModel();
@@ -48,6 +53,11 @@ document.getElementById("createInstanceHouse").addEventListener("click", (event:
 			houseBuilder.addHouseCreateInstance(addAnother);
 	}
 	addAnother();
+});
+document.getElementById("clearHouses").addEventListener("click", (event: Event) => {
+	event.preventDefault();
+
+	houseBuilder.clearHouses();
 });
 
 /* ===================================================================================================

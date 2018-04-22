@@ -13,6 +13,9 @@ export default class CookieCutterSuburbia {
 
 		this.scene = new BABYLON.Scene(engine);
 
+		// TODO: remove?
+		this.scene.shadowsEnabled = false;
+
 		const camera = new BABYLON.UniversalCamera("camera", new BABYLON.Vector3(0, 5, -10), this.scene);
 		camera.speed = 0.5;
 		camera.setTarget(BABYLON.Vector3.Zero());
@@ -31,7 +34,7 @@ export default class CookieCutterSuburbia {
 		//red.ambientColor = new BABYLON.Color3(0.23, 0.98, 0.53);
 		sphere.material = red;
 
-		let ground = BABYLON.MeshBuilder.CreateGround("ground", {width: 6, height: 6, subdivisions: 2}, this.scene);
+		let ground = BABYLON.MeshBuilder.CreateGround("ground", {width: 80, height: 80, subdivisions: 8}, this.scene);
 		const green = new BABYLON.StandardMaterial("red", this.scene);
 		green.diffuseColor = new BABYLON.Color3(0, 0.6, 0.20);
 		ground.material = green;
