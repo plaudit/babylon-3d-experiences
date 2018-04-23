@@ -5,14 +5,13 @@ var BABYLON = require("babylonjs");
 var Texture = BABYLON.Texture;
 var CookieCutterSuburbia = /** @class */ (function () {
     function CookieCutterSuburbia(canvas) {
+        this.frameRate = 200;
+        this.boxAnimatable = null;
         var adaptToDeviceRatio = false;
         var engine = new BABYLON.Engine(canvas, true, {}, adaptToDeviceRatio);
         var scene = new BABYLON.Scene(engine);
         scene.clearColor = new BABYLON.Color4(0.5, 0.8, 0.8, 1);
-        //		scene.ambientColor = new BABYLON.Color3(1,0,0);
-        // TODO: remove?
-        //scene.autoClear = true;
-        //scene.shadowsEnabled = false;
+        scene.ambientColor = new BABYLON.Color3(0.3, 0.3, 0.3);
         var camera = new BABYLON.UniversalCamera("camera", new BABYLON.Vector3(-5, 1.5, 4), scene);
         camera.rotation = new BABYLON.Vector3(0.14, 8.5, 0);
         camera.speed = 0.4;
@@ -34,7 +33,7 @@ var CookieCutterSuburbia = /** @class */ (function () {
         red.diffuseColor = new BABYLON.Color3(1, 0, 0);
         box.material = red;
         // Material for ground
-        var groundTexture = new BABYLON.Texture("grass.jpg", scene);
+        var groundTexture = new BABYLON.Texture("./grass.jpg", scene);
         groundTexture.uScale = 8;
         groundTexture.vScale = 8;
         groundTexture.wrapU = Texture.MIRROR_ADDRESSMODE;
@@ -49,22 +48,31 @@ var CookieCutterSuburbia = /** @class */ (function () {
             }
         };
         var intervalID = setInterval(installMaterialWhenTextureReady, 100);
-        // https://doc.babylonjs.com/how_to/combine
-        var frameRate = 200;
-        var yRot = new BABYLON.Animation("yRot", "rotation.y", frameRate, BABYLON.Animation.ANIMATIONTYPE_FLOAT, BABYLON.Animation.ANIMATIONLOOPMODE_CYCLE);
+        // Rotate box the box
+        var yRot = new BABYLON.Animation("yRot", "rotation.y", this.frameRate, BABYLON.Animation.ANIMATIONTYPE_FLOAT, BABYLON.Animation.ANIMATIONLOOPMODE_CYCLE);
         var keyFramesR = [];
         keyFramesR.push({
             frame: 0,
             value: 0
         });
         keyFramesR.push({
-            frame: 2 * frameRate,
+            frame: 2 * this.frameRate,
             value: 2 * Math.PI
         });
         yRot.setKeys(keyFramesR);
-        scene.beginDirectAnimation(box, [yRot], 0, 2 * frameRate, true);
+        this.yRot = yRot;
+        this.box = box;
         this.scene = scene;
     }
+    CookieCutterSuburbia.prototype.toggleAnimation = function () {
+        if (this.boxAnimatable === null) {
+            this.boxAnimatable = this.scene.beginDirectAnimation(this.box, [this.yRot], 0, 2 * this.frameRate, true);
+        }
+        else {
+            this.boxAnimatable.stop();
+            this.boxAnimatable = null;
+        }
+    };
     return CookieCutterSuburbia;
 }());
 exports.default = CookieCutterSuburbia;
@@ -232,12 +240,13 @@ var SmartRenderer = /** @class */ (function () {
         if (this.alwaysRender == true || this.forceRenderOnce === true || this.scene.animatables.length > 0) {
             return true;
         }
-        // Has camera moved?
+        // Has the camera moved?
         var activeCamera = this.scene.activeCamera;
         activeCamera.update(); // Must call update so position and lastRotation are correct
         if (!this.lastPosition.equals(activeCamera.position) || !this.lastRotation.equals(activeCamera.rotation)) {
             return true;
         }
+        // Always render if debug layer is open since the user may be modifying properties
         if (this.scene.debugLayer.isVisible()) {
             return true;
         }
@@ -255,18 +264,6 @@ var HouseBuilder_1 = require("./HouseBuilder");
 var canvas = document.getElementById('renderCanvas');
 var suburbia = new CookieCutterSuburbia_1.default(canvas);
 var scene = suburbia.scene;
-/*
- * TODO:
- * - Make way to stop / start box from spinning
- * - Optimize more
- * 		- Try freezing and others
- * 		- Try LOD - https://doc.babylonjs.com/how_to/in-browser_mesh_simplification
- * - Add count of number of houses
- *
- *	NOTE
- * - On scene setting adaptToDeviceRatio to false had drastic affect... like 33fps to 55fps
- *
- */
 /* ===================================================================================================
  * Smart Renderer
  */
@@ -314,6 +311,16 @@ document.getElementById("mergeHouses").addEventListener("click", function (event
     event.preventDefault();
     houseBuilder.mergeHouses();
 });
+/* ===================================================================================================
+ * Box animation
+ */
+document.getElementById("animationToggle").addEventListener("click", function (event) {
+    event.preventDefault();
+    suburbia.toggleAnimation();
+});
+/* ===================================================================================================
+ * LOD
+ */
 document.getElementById("lodManual").addEventListener("click", function (event) {
     event.preventDefault();
     houseBuilder.lodManual();

@@ -36,13 +36,14 @@ export default class SmartRenderer {
 			return true;
 		}
 
-		// Has camera moved?
+		// Has the camera moved?
 		const activeCamera = <BABYLON.TargetCamera>this.scene.activeCamera;
 		activeCamera.update(); // Must call update so position and lastRotation are correct
 		if (!this.lastPosition.equals(activeCamera.position) || !this.lastRotation.equals(activeCamera.rotation)) {
 			return true;
 		}
 
+		// Always render if debug layer is open since the user may be modifying properties
 		if (this.scene.debugLayer.isVisible()) {
 			return true;
 		}

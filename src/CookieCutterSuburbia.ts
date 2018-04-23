@@ -4,6 +4,11 @@ import Texture = BABYLON.Texture;
 export default class CookieCutterSuburbia {
 	public scene: BABYLON.Scene;
 
+	private readonly frameRate = 200;
+	private box: BABYLON.Mesh;
+	private yRot: BABYLON.Animation;
+	private boxAnimatable: BABYLON.Animatable = null;
+
 	constructor(canvas: HTMLCanvasElement) {
 		const adaptToDeviceRatio = false;
 		const engine = new BABYLON.Engine(canvas, true, {}, adaptToDeviceRatio);
@@ -11,10 +16,6 @@ export default class CookieCutterSuburbia {
 		const scene = new BABYLON.Scene(engine);
 		scene.clearColor = new BABYLON.Color4(0.5, 0.8, 0.8, 1);
 		scene.ambientColor = new BABYLON.Color3(0.3, 0.3, 0.3);
-
-		// TODO: remove?
-		//scene.autoClear = true;
-		//scene.shadowsEnabled = false;
 
 		const camera = new BABYLON.UniversalCamera("camera", new BABYLON.Vector3(-5, 1.5, 4), scene);
 		camera.rotation = new BABYLON.Vector3(0.14, 8.5, 0);
@@ -44,7 +45,7 @@ export default class CookieCutterSuburbia {
 		box.material = red;
 
 		// Material for ground
-		const groundTexture = new BABYLON.Texture("grass.jpg", scene);
+		const groundTexture = new BABYLON.Texture("./grass.jpg", scene);
 		groundTexture.uScale = 8;
 		groundTexture.vScale = 8;
 		groundTexture.wrapU = Texture.MIRROR_ADDRESSMODE;
@@ -60,21 +61,30 @@ export default class CookieCutterSuburbia {
 		}
 		let intervalID = setInterval(installMaterialWhenTextureReady, 100);
 
-		// https://doc.babylonjs.com/how_to/combine
-		let frameRate = 200;
-		let yRot = new BABYLON.Animation("yRot", "rotation.y", frameRate, BABYLON.Animation.ANIMATIONTYPE_FLOAT, BABYLON.Animation.ANIMATIONLOOPMODE_CYCLE);
+		// Rotate box the box
+		let yRot = new BABYLON.Animation("yRot", "rotation.y", this.frameRate, BABYLON.Animation.ANIMATIONTYPE_FLOAT, BABYLON.Animation.ANIMATIONLOOPMODE_CYCLE);
 		var keyFramesR = [];
 		keyFramesR.push({
 			frame: 0,
 			value: 0
 		});
 		keyFramesR.push({
-			frame: 2 * frameRate,
+			frame: 2 * this.frameRate,
 			value: 2 * Math.PI
 		});
 		yRot.setKeys(keyFramesR);
-		scene.beginDirectAnimation(box, [yRot], 0, 2 * frameRate, true);
 
+		this.yRot = yRot;
+		this.box = box;
 		this.scene = scene;
+	}
+
+	public toggleAnimation() {
+		if (this.boxAnimatable === null) {
+			this.boxAnimatable = this.scene.beginDirectAnimation(this.box, [this.yRot], 0, 2 * this.frameRate, true);
+		} else {
+			this.boxAnimatable.stop();
+			this.boxAnimatable = null;
+		}
 	}
 }

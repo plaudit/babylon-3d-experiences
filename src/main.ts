@@ -6,19 +6,6 @@ const canvas = <HTMLCanvasElement>document.getElementById('renderCanvas');
 const suburbia = new CookieCutterSuburbia(canvas);
 const scene = suburbia.scene;
 
-/*
- * TODO:
- * - Make way to stop / start box from spinning
- * - Optimize more
- * 		- Try freezing and others
- * 		- Try LOD - https://doc.babylonjs.com/how_to/in-browser_mesh_simplification
- * - Add count of number of houses
- *
- *	NOTE
- * - On scene setting adaptToDeviceRatio to false had drastic affect... like 33fps to 55fps
- *
- */
-
 /* ===================================================================================================
  * Smart Renderer
  */
@@ -68,6 +55,17 @@ document.getElementById("mergeHouses").addEventListener("click", (event: Event) 
 	houseBuilder.mergeHouses();
 });
 
+/* ===================================================================================================
+ * Box animation
+ */
+document.getElementById("animationToggle").addEventListener("click", (event: Event) => {
+	event.preventDefault();
+	suburbia.toggleAnimation();
+});
+
+/* ===================================================================================================
+ * LOD
+ */
 document.getElementById("lodManual").addEventListener("click", (event: Event) => {
 	event.preventDefault();
 	houseBuilder.lodManual();
