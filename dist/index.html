@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8" />
+		<title>BabylonJS</title>
+
+		<link type="text/css" href="main.css" rel="stylesheet"/>
+	</head>
+	<body>
+		<canvas id="renderCanvas"></canvas>
+
+		<div id="controls">
+			<button id="smartRenderToggle">Smart Render</button>
+
+			<input id="housesNumberToAdd" type="number" value="300"/>
+			<button id="cloneHouse">Clone</button>
+			<button id="createInstanceHouse">Create Instance</button>
+			<button id="clearHouses">Clear</button>
+
+			<button id="mergeHouses">Merge Houses</button>
+			<button id="debugLayerToggle">Debug</button>
+
+			<span>LOD: </span>
+			<button id="lodManual">Manual</button>
+			<button id="lodAutomatic">Auto</button>
+			<button id="lodRemoveAll">Remove</button>
+		</div>
+
+		<script type="text/javascript" src="commons.js"></script>
+		<script type="text/javascript" src="main.js"></script>
+	</body>
+</html>

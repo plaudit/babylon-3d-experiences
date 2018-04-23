@@ -126,12 +126,16 @@ export default class HouseBuilder {
 	}
 
 	public lodAutomatic() {
-		alert('TODO: Implement');
-
 		this.getOriginalHouse((arg) => {
 			const original = arg as BABYLON.Mesh;
 			this._lodRemoveAll(original);
-			// TODO:
+
+			original.simplify([
+					{quality: 0.6, distance: 10, optimizeMesh: true},
+					{quality: 0.2, distance: 15, optimizeMesh: true},
+				], true, BABYLON.SimplificationType.QUADRATIC, function() {
+				alert('Done.');
+			});
 		});
 	}
 
