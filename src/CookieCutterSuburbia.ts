@@ -31,12 +31,12 @@ export default class CookieCutterSuburbia {
 		pointLight_2.intensity = 0.50;
 
 		// Create box
-		let box = BABYLON.MeshBuilder.CreateBox("box", {width: 1, height: 1, depth: 1}, scene);
+		const box = BABYLON.MeshBuilder.CreateBox("box", {width: 1, height: 1, depth: 1}, scene);
 		box.position.y = 1.5;
 		box.rotation = new BABYLON.Vector3(Math.PI/4, Math.PI/4, Math.PI/4);
 
 		// Create ground
-		let ground = BABYLON.MeshBuilder.CreateGround("ground", {width: 80, height: 80, subdivisions: 8}, scene);
+		const ground = BABYLON.MeshBuilder.CreateGround("ground", {width: 80, height: 80, subdivisions: 8}, scene);
 
 		// Material for box
 		const red = new BABYLON.StandardMaterial("red", scene);
@@ -44,12 +44,12 @@ export default class CookieCutterSuburbia {
 		box.material = red;
 
 		// Material for ground
-		let groundTexture = new BABYLON.Texture("grass.jpg", scene);
+		const groundTexture = new BABYLON.Texture("grass.jpg", scene);
 		groundTexture.uScale = 8;
 		groundTexture.vScale = 8;
 		groundTexture.wrapU = Texture.MIRROR_ADDRESSMODE;
 		groundTexture.wrapV = Texture.MIRROR_ADDRESSMODE;
-		let groundMaterial = new BABYLON.StandardMaterial("grass", scene);
+		const groundMaterial = new BABYLON.StandardMaterial("grass", scene);
 		groundMaterial.diffuseTexture = groundTexture;
 		const installMaterialWhenTextureReady = () => {
 			if (groundTexture.isReady()) {

@@ -2,13 +2,10 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="a1b37c8a-a35e-49ac-97e5-8744cb908af2" name="Default" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/CookieCutterSuburbia.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/CookieCutterSuburbia.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/HouseBuilder.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/HouseBuilder.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/SmartRender.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/SmartRender.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/index.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/main.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/models/house.babylon" beforeDir="false" afterPath="$PROJECT_DIR$/src/models/house.babylon" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -23,8 +20,8 @@
       <file leaf-file-name="main.ts" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main.ts">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="493">
-              <caret line="51" column="35" lean-forward="true" selection-start-line="51" selection-start-column="35" selection-end-line="51" selection-end-column="35" />
+            <state relative-caret-position="731">
+              <caret line="43" selection-start-line="43" selection-end-line="43" />
               <folding>
                 <element signature="e#0#58#0" expanded="true" />
               </folding>
@@ -35,8 +32,8 @@
       <file leaf-file-name="CookieCutterSuburbia.ts" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/CookieCutterSuburbia.ts">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1053">
-              <caret line="76" lean-forward="true" selection-start-line="76" selection-end-line="76" />
+            <state relative-caret-position="493">
+              <caret line="29" column="24" selection-start-line="29" selection-start-column="24" selection-end-line="29" selection-end-column="24" />
               <folding>
                 <element signature="e#0#37#0" expanded="true" />
               </folding>
@@ -44,20 +41,20 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="HouseBuilder.ts" pinned="false" current-in-tab="false">
+      <file leaf-file-name="HouseBuilder.ts" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/HouseBuilder.ts">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="612">
-              <caret line="36" column="64" selection-start-line="36" selection-start-column="64" selection-end-line="36" selection-end-column="64" />
+            <state relative-caret-position="765">
+              <caret line="123" column="34" selection-start-line="123" selection-start-column="34" selection-end-line="123" selection-end-column="34" />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="index.html" pinned="false" current-in-tab="true">
+      <file leaf-file-name="index.html" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/index.html">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="255">
-              <caret line="15" column="68" selection-start-line="15" selection-start-column="68" selection-end-line="15" selection-end-column="68" />
+              <caret line="15" selection-start-line="15" selection-end-line="15" />
             </state>
           </provider>
         </entry>
@@ -103,9 +100,9 @@
         <option value="$PROJECT_DIR$/src/models/house.babylon" />
         <option value="$PROJECT_DIR$/src/SmartRender.ts" />
         <option value="$PROJECT_DIR$/src/CookieCutterSuburbia.ts" />
+        <option value="$PROJECT_DIR$/src/index.html" />
         <option value="$PROJECT_DIR$/src/main.ts" />
         <option value="$PROJECT_DIR$/src/HouseBuilder.ts" />
-        <option value="$PROJECT_DIR$/src/index.html" />
       </list>
     </option>
   </component>
@@ -126,10 +123,10 @@
     <handled-path value="$PROJECT_DIR$/node_modules" />
   </component>
   <component name="ProjectFrameBounds">
-    <option name="x" value="-439" />
+    <option name="x" value="-437" />
     <option name="y" value="-2160" />
-    <option name="width" value="1943" />
-    <option name="height" value="2111" />
+    <option name="width" value="1938" />
+    <option name="height" value="2109" />
   </component>
   <component name="ProjectView">
     <navigator proportions="" version="1">
@@ -247,15 +244,15 @@
       <option name="presentableId" value="Default" />
       <updated>1524307524591</updated>
       <workItem from="1524307533428" duration="32981000" />
-      <workItem from="1524395093031" duration="14557000" />
+      <workItem from="1524395093031" duration="19644000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="47538000" />
+    <option name="totallyTimeSpent" value="52625000" />
   </component>
   <component name="ToolWindowManager">
-    <frame x="-435" y="-2160" width="1295" height="1407" extended-state="0" />
+    <frame x="-434" y="-2160" width="1292" height="1406" extended-state="0" />
     <editor active="true" />
     <layout>
       <window_info anchor="right" id="Palette" order="5" />
@@ -452,37 +449,37 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/CookieCutterSuburbia.ts">
+    <entry file="file://$PROJECT_DIR$/src/index.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1053">
-          <caret line="76" lean-forward="true" selection-start-line="76" selection-end-line="76" />
-          <folding>
-            <element signature="e#0#37#0" expanded="true" />
-          </folding>
+        <state relative-caret-position="255">
+          <caret line="15" selection-start-line="15" selection-end-line="15" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main.ts">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="493">
-          <caret line="51" column="35" lean-forward="true" selection-start-line="51" selection-start-column="35" selection-end-line="51" selection-end-column="35" />
+        <state relative-caret-position="731">
+          <caret line="43" selection-start-line="43" selection-end-line="43" />
           <folding>
             <element signature="e#0#58#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/HouseBuilder.ts">
+    <entry file="file://$PROJECT_DIR$/src/CookieCutterSuburbia.ts">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="612">
-          <caret line="36" column="64" selection-start-line="36" selection-start-column="64" selection-end-line="36" selection-end-column="64" />
+        <state relative-caret-position="493">
+          <caret line="29" column="24" selection-start-line="29" selection-start-column="24" selection-end-line="29" selection-end-column="24" />
+          <folding>
+            <element signature="e#0#37#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/index.html">
+    <entry file="file://$PROJECT_DIR$/src/HouseBuilder.ts">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="255">
-          <caret line="15" column="68" selection-start-line="15" selection-start-column="68" selection-end-line="15" selection-end-column="68" />
+        <state relative-caret-position="765">
+          <caret line="123" column="34" selection-start-line="123" selection-start-column="34" selection-end-line="123" selection-end-column="34" />
         </state>
       </provider>
     </entry>

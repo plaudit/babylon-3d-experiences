@@ -24,24 +24,22 @@ export default class HouseBuilder {
 		this.clearHouses();
 	}
 
-	public getOriginalHouse(callback?: newHouseCallback): void {
-		if (this.originalHouse == null) {
-			this.addHouseFromModel(callback);
-		} else {
-			this.executeCallbacks(callback, this.originalHouse);
-		}
-	}
-
-	public addHouseFromModel(callback?: newHouseCallback): void {
+	public getOriginalHouse(callback: newHouseCallback): void {
 		if (this.originalHouse !== null) {
-			// Loaded a house previous, rename it so new one doesn't conflict
-			this.originalHouse.id = "houseOriginal_" + this.houses.length;
-		}
-		BABYLON.SceneLoader.Append("./", "house.babylon", this.scene, () => {
-			this.originalHouse = <BABYLON.Mesh>this.scene.getNodeByID("house");
-			this.addAndPosition(this.originalHouse);
+			// Already loaded
 			this.executeCallbacks(callback, this.originalHouse);
-		});
+		} else {
+			// Not yet loaded
+			BABYLON.SceneLoader.Append("./", "house.babylon", this.scene, () => {
+				let house = <BABYLON.Mesh>this.scene.getNodeByID("house");
+
+				// Very first one, we hide it because it is meant as more a template
+				house.setEnabled(false);
+				this.originalHouse = house;
+
+				this.executeCallbacks(callback, house);
+			});
+		}
 	}
 
 	public addHouseClone(callback?: newHouseCallback): void {
@@ -87,21 +85,18 @@ export default class HouseBuilder {
 
 	public clearHouses() {
 		if (this.houses.length > 0) {
+			// Remove the houses
 			this.houses.forEach(value => {
-				if (value !== this.originalHouse) {
-					value.dispose();
-				}
+				value.dispose();
 			});
-
 			this.houses = [];
-			if (this.originalHouse !== null) {
-				this.houses.push(this.originalHouse);
-			}
 		}
 
+		// Restart positioning
 		this.nextX = this.xStart;
 		this.nextZ = 0;
 
+		// Inform callback that a change took place
 		this.executeCallbacks();
 	}
 
@@ -111,6 +106,44 @@ export default class HouseBuilder {
 		const red = new BABYLON.StandardMaterial("red", this.scene);
 		red.diffuseColor = new BABYLON.Color3(1, 0, 0);
 		mergedHouses.material = red;
+	}
+
+	public lodManual() {
+		this.lodRemoveAll();
+		this.getOriginalHouse((arg) => {
+			const original = arg as BABYLON.Mesh;
+			this._lodRemoveAll(original);
+
+			// Create box
+			const box = BABYLON.MeshBuilder.CreateBox(original.id + "_box", {width: 0.5, height: 0.7, depth: 0.5}, this.scene);
+			const boxMaterial = new BABYLON.StandardMaterial(original.id + "_material", this.scene);
+			boxMaterial.diffuseColor = new BABYLON.Color3(0, 0, 0);
+			box.material = boxMaterial;
+			box.setEnabled(false);
+
+			original.addLODLevel(15, box);
+		});
+	}
+
+	public lodAutomatic() {
+		alert('TODO: Implement');
+
+		this.getOriginalHouse((arg) => {
+			const original = arg as BABYLON.Mesh;
+			this._lodRemoveAll(original);
+			// TODO:
+		});
+	}
+
+	public lodRemoveAll() {
+		this.getOriginalHouse((arg) => {
+			this._lodRemoveAll(arg as BABYLON.Mesh);
+		});
+	}
+	private _lodRemoveAll(original: BABYLON.Mesh) {
+		original.getLODLevels().forEach((lodLevel) => {
+			original.removeLODLevel(lodLevel.mesh);
+		})
 	}
 
 }

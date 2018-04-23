@@ -8,7 +8,6 @@ const scene = suburbia.scene;
 
 /*
  * TODO:
- * - Finish slides first
  * - Make way to stop / start box from spinning
  * - Optimize more
  * 		- Try freezing and others
@@ -16,9 +15,7 @@ const scene = suburbia.scene;
  * - Add count of number of houses
  *
  *	NOTE
- * - I removed this from house.babylon:
- * 		"autoClear":true,"clearColor":[0.0509,0.0509,0.0509],"ambientColor":[0,0,0],"gravity":[0,-9.81,0],
- * 	- On scene setting adaptToDeviceRatio to false had drastic affect... like 33fps to 55fps
+ * - On scene setting adaptToDeviceRatio to false had drastic affect... like 33fps to 55fps
  *
  */
 
@@ -44,17 +41,6 @@ const houseBuilder = new HouseBuilder(scene, () => {
 	smartRender.forceRenderOnce = true;
 });
 const housesNumberToAdd = <HTMLInputElement>document.getElementById("housesNumberToAdd");
-/*
-document.getElementById("fromScratchHouse").addEventListener("click", (event: Event) => {
-	event.preventDefault();
-	let numberToAdd = parseInt(housesNumberToAdd.value);
-	function addAnother() {
-		if (numberToAdd-- > 0)
-			houseBuilder.addHouseFromModel(addAnother);
-	}
-	addAnother();
-});
-*/
 document.getElementById("cloneHouse").addEventListener("click", (event: Event) => {
 	event.preventDefault();
 	let numberToAdd = parseInt(housesNumberToAdd.value);
@@ -80,6 +66,19 @@ document.getElementById("clearHouses").addEventListener("click", (event: Event) 
 document.getElementById("mergeHouses").addEventListener("click", (event: Event) => {
 	event.preventDefault();
 	houseBuilder.mergeHouses();
+});
+
+document.getElementById("lodManual").addEventListener("click", (event: Event) => {
+	event.preventDefault();
+	houseBuilder.lodManual();
+});
+document.getElementById("lodAutomatic").addEventListener("click", (event: Event) => {
+	event.preventDefault();
+	houseBuilder.lodAutomatic();
+});
+document.getElementById("lodRemoveAll").addEventListener("click", (event: Event) => {
+	event.preventDefault();
+	houseBuilder.lodRemoveAll();
 });
 /* ===================================================================================================
  * Debugger
